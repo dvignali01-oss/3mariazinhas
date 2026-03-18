@@ -1,44 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Três Mariazinhas | Doceria Artesanal</title>
-
-
-    <div><img src="icon.png" alt="Logotipo Três Mariazinhas" width="400"></div>
-
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #FF85A2;        /* Rosa Chiclete */
-            --secondary: #6D4C41;      /* Marrom Chocolate */
-            --accent: #FFD1DC;         /* Rosa Bebê */
-            --bg: #FFF9FA;             /* Fundo Off-White Pink */
+            --primary: #FF85A2;
+            --secondary: #6D4C41;
+            --accent: #FFD1DC;
+            --bg: #FFF9FA;
             --white: #FFFFFF;
             --success: #27AE60;
             --shadow: 0 8px 30px rgba(255, 133, 162, 0.15);
             --radius: 24px;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Outfit', sans-serif;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Outfit', sans-serif; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--secondary); padding-bottom: 100px; }
 
-        body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--secondary);
-            overflow-x: hidden;
-        }
-
-        /* HEADER ANIMADO */
         header {
             background: var(--white);
             padding: 30px 20px;
@@ -46,7 +30,8 @@
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
             box-shadow: var(--shadow);
-            position: relative;
+            position: sticky;
+            top: 0;
             z-index: 10;
         }
 
@@ -54,292 +39,114 @@
             font-family: 'Pacifico', cursive;
             font-size: 2.2rem;
             color: var(--primary);
-            margin: 0;
             text-shadow: 2px 2px 0px var(--accent);
         }
 
-        header p {
-            margin: 5px 0 0;
-            font-weight: 400;
-            opacity: 0.8;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        /* CATEGORIAS */
-        .categories {
-            display: flex;
-            gap: 12px;
-            padding: 20px;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-        .categories::-webkit-scrollbar { display: none; }
-
-        .cat-item {
-            background: var(--white);
-            padding: 10px 20px;
-            border-radius: 50px;
-            white-space: nowrap;
-            font-weight: 600;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            border: 1px solid var(--accent);
-            transition: 0.3s;
-        }
-        .cat-item.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* LISTA DE PRODUTOS */
-        .container {
-            padding: 0 20px 120px;
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Dois itens por linha no mobile */
-            gap: 15px;
-        }
+        .container { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
         .card {
             background: var(--white);
             border-radius: var(--radius);
             padding: 10px;
             box-shadow: var(--shadow);
-            position: relative;
             transition: transform 0.2s;
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         .card:active { transform: scale(0.95); }
+        .card img { width: 100%; aspect-ratio: 1/1; border-radius: 18px; object-fit: cover; margin-bottom: 10px; }
+        .card b { display: block; font-size: 0.9rem; height: 2.4em; line-height: 1.2; margin-bottom: 5px; }
+        .price-tag { color: var(--primary); font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; }
 
-        .card img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 18px;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
+        .btn-add { background: var(--primary); color: white; border: none; width: 100%; padding: 10px; border-radius: 15px; font-weight: 600; cursor: pointer; }
 
-        .card b {
-            display: block;
-            font-size: 0.95rem;
-            line-height: 1.2;
-            height: 2.4em;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }
-
-        .price-tag {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .btn-add {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 10px;
-            border-radius: 15px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 133, 162, 0.3);
-        }
-
-        /* CARRINHO FLUTUANTE (PILL DESIGN) */
         .cart-bar {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translate(-50%, 150%);
-            background: var(--secondary);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 85%;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: fixed; bottom: 25px; left: 50%; transform: translate(-50%, 150%);
+            background: var(--secondary); color: white; padding: 15px 25px; border-radius: 50px;
+            display: flex; justify-content: space-between; align-items: center; width: 85%;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
         .cart-bar.active { transform: translate(-50%, 0); }
+        .cart-badge { background: var(--primary); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.75rem; margin-right: 10px; }
 
-        .cart-info { display: flex; align-items: center; gap: 10px; }
-        .cart-badge {
-            background: var(--primary);
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 200; backdrop-filter: blur(5px); }
+        .modal-box { position: absolute; bottom: 0; width: 100%; background: var(--bg); border-radius: 35px 35px 0 0; padding: 30px 20px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        /* MODAL BOTTOM SHEET */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            display: none;
-            z-index: 200;
-            backdrop-filter: blur(5px);
-        }
+        .item-row { background: var(--white); padding: 12px; border-radius: 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .qty-controls { display: flex; align-items: center; gap: 12px; background: var(--bg); padding: 5px 10px; border-radius: 10px; color: var(--primary); font-weight: bold; }
 
-        .modal-box {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: var(--bg);
-            border-radius: 35px 35px 0 0;
-            padding: 30px 20px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.4s ease;
-        }
+        input, select { width: 100%; padding: 16px; margin-bottom: 12px; border-radius: 18px; border: 2px solid transparent; background: var(--white); font-size: 1rem; }
+        input:focus { border-color: var(--primary); outline: none; }
 
-        .handle {
-            width: 40px;
-            height: 5px;
-            background: #D1D1D1;
-            border-radius: 10px;
-            margin: -10px auto 20px;
-        }
+        .btn-main { background: var(--success); color: white; border: none; width: 100%; padding: 18px; border-radius: 20px; font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
 
-        .item-row {
-            background: var(--white);
-            padding: 15px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-
-        .qty-box {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--bg);
-            padding: 5px 12px;
-            border-radius: 12px;
-        }
-
-        .qty-btn {
-            border: none;
-            background: none;
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        /* INPUTS ESTILIZADOS */
-        .form-group input, .form-group select {
-            border: 2px solid transparent;
-            background: var(--white);
-            padding: 16px;
-            border-radius: 18px;
-            margin-bottom: 12px;
-            width: 100%;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
-
-        .form-group input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .btn-send {
-            background: var(--success);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 18px;
-            border-radius: 20px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        /* Responsividade para telas maiores (opcional) */
-        @media (min-width: 500px) {
-            .container { grid-template-columns: 1fr 1fr 1fr; }
-        }
+        #pix-screen { display: none; text-align: center; }
+        .pix-box { background: var(--white); border: 2px dashed var(--primary); padding: 20px; border-radius: 20px; margin: 20px 0; }
+        .copy-tag { background: var(--secondary); color: white; padding: 12px; border-radius: 15px; display: inline-block; width: 100%; margin-top: 10px; font-weight: 600; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header>
         <h1 class="logo-font">Três Mariazinhas</h1>
-        <p><i class="fas fa-heart" style="color: var(--primary)"></i> Confeitaria Artesanal</p>
+        <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">DOCES ARTESANAIS COM AMOR 🎀</p>
     </header>
 
-    <div class="categories">
-        <div class="cat-item active">Todos</div>
-        <div class="cat-item">Bolos</div>
-        <div class="cat-item">Copos</div>
-        <div class="cat-item">Brigadeiros</div>
-    </div>
-
-    <div class="container" id="list"></div>
+    <div class="container" id="product-list"></div>
 
     <div class="cart-bar" id="cart-bar" onclick="openCart()">
-        <div class="cart-info">
+        <div style="display: flex; align-items: center;">
             <div class="cart-badge" id="cart-count">0</div>
-            <span>Ver sacola</span>
+            <span>Minha Sacola</span>
         </div>
         <b id="total-price">R$ 0,00</b>
     </div>
 
     <div class="modal" id="modal">
         <div class="modal-box">
-            <div class="handle"></div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="margin: 0; font-size: 1.4rem;">Sua Sacola 🛍️</h2>
-                <i class="fas fa-times" onclick="closeCart()" style="font-size: 1.2rem; opacity: 0.5;"></i>
-            </div>
-            
-            <div id="items-list"></div>
-            
-            <div class="form-group" style="margin-top: 25px;">
-                <input id="name" type="text" placeholder="Seu nome">
-                <input id="addr" type="text" placeholder="Endereço de entrega">
-                <select id="pay">
-                    <option value="" disabled selected>Forma de pagamento</option>
-                    <option value="Pix">Pix</option>
-                    <option value="Cartão">Cartão (Maquininha)</option>
-                    <option value="Dinheiro">Dinheiro</option>
-                </select>
+            <div id="checkout-form">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-size: 1.4rem;">Seu Pedido 🛍️</h2>
+                    <i class="fas fa-times" onclick="closeCart()" style="cursor: pointer;"></i>
+                </div>
+                <div id="items-list"></div>
+                <div style="margin-top: 20px;">
+                    <input id="name" type="text" placeholder="Seu Nome">
+                    <input id="addr" type="text" placeholder="Endereço de Entrega">
+                    <select id="pay">
+                        <option value="" disabled selected>Forma de Pagamento</option>
+                        <option value="Pix">Pix (Copia e Cola)</option>
+                        <option value="Cartão">Cartão (Levar maquininha)</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                    </select>
+                    <button class="btn-main" onclick="handleCheckout()">Continuar <i class="fas fa-arrow-right"></i></button>
+                </div>
             </div>
 
-            <button class="btn-send" onclick="sendWhatsApp()">
-                Finalizar Pedido <i class="fab fa-whatsapp"></i>
-            </button>
+            <div id="pix-screen">
+                <h2 style="color: var(--primary);">Quase lá! 🧁</h2>
+                <p>Copie a chave e pague no seu banco:</p>
+                <div class="pix-box">
+                    <small style="color: var(--secondary)">Total a pagar:</small>
+                    <div id="pix-value" style="font-size: 1.8rem; font-weight: 800; color: var(--primary);">R$ 0,00</div>
+                    <div style="margin-top: 15px;">
+                        <small>Chave E-mail:</small>
+                        <div id="key-text" style="font-weight: 700; color: var(--secondary);">dvignali01@gmail.com</div>
+                    </div>
+                    <div class="copy-tag" onclick="copyKey()"><i class="fas fa-copy"></i> COPIAR CHAVE PIX</div>
+                </div>
+                <button class="btn-main" onclick="sendWhatsApp()">Já paguei! Enviar Comprovante <i class="fab fa-whatsapp"></i></button>
+                <button onclick="backToCart()" style="background: none; border: none; color: var(--secondary); margin-top: 15px; font-weight: 600;">Voltar</button>
+            </div>
         </div>
     </div>
 
     <script>
+        const CHAVE_PIX = "dvignali01@gmail.com";
+        const WHATSAPP_FONE = "5511915183761";
+
         const products = [
             {id: 1, name: "Bolo Ninho c/ Morango", price: 18.00, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400"},
             {id: 2, name: "Copo da Felicidade", price: 22.00, img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400"},
@@ -349,11 +156,10 @@
 
         let cart = {};
 
-        function renderProducts() {
-            const list = document.getElementById('list');
-            list.innerHTML = products.map(p => `
+        function render() {
+            document.getElementById('product-list').innerHTML = products.map(p => `
                 <div class="card">
-                    <img src="${p.img}" alt="${p.name}">
+                    <img src="${p.img}">
                     <b>${p.name}</b>
                     <div class="price-tag">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
                     <button class="btn-add" onclick="addToCart(${p.id})">Adicionar</button>
@@ -362,109 +168,77 @@
         }
 
         function addToCart(id) {
-            if (cart[id]) {
-                cart[id].qty += 1;
-            } else {
-                const product = products.find(p => p.id === id);
-                cart[id] = { ...product, qty: 1 };
-            }
-            updateCartUI();
-            
-            // Feedback tátil simples
-            navigator.vibrate?.(50);
+            if (cart[id]) cart[id].qty++;
+            else cart[id] = { ...products.find(x => x.id === id), qty: 1 };
+            updateUI();
         }
 
-        function changeQty(id, delta) {
-            if (cart[id]) {
-                cart[id].qty += delta;
-                if (cart[id].qty <= 0) delete cart[id];
-            }
-            updateCartUI();
-            openCart();
-        }
-
-        function updateCartUI() {
-            const bar = document.getElementById('cart-bar');
-            const countEl = document.getElementById('cart-count');
-            const totalEl = document.getElementById('total-price');
-            
+        function updateUI() {
             const items = Object.values(cart);
             const totalItems = items.reduce((acc, curr) => acc + curr.qty, 0);
             const totalPrice = items.reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
-
-            if (totalItems > 0) {
-                bar.classList.add('active');
-            } else {
-                bar.classList.remove('active');
-                closeCart();
-            }
-
-            countEl.innerText = totalItems;
-            totalEl.innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cart-count').innerText = totalItems;
+            document.getElementById('total-price').innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cart-bar').classList.toggle('active', totalItems > 0);
         }
 
         function openCart() {
-            const modal = document.getElementById('modal');
-            const list = document.getElementById('items-list');
-            const items = Object.values(cart);
-
-            if (items.length === 0) return;
-
-            modal.style.display = 'block';
-            list.innerHTML = items.map(i => `
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('checkout-form').style.display = 'block';
+            document.getElementById('pix-screen').style.display = 'none';
+            document.getElementById('items-list').innerHTML = Object.values(cart).map(i => `
                 <div class="item-row">
-                    <div>
-                        <div style="font-weight: 600;">${i.name}</div>
-                        <div style="color: var(--primary); font-size: 0.9rem; font-weight: 700;">
-                            R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}
-                        </div>
-                    </div>
-                    <div class="qty-box">
-                        <button class="qty-btn" onclick="changeQty(${i.id}, -1)">-</button>
-                        <span style="font-weight: 600;">${i.qty}</span>
-                        <button class="qty-btn" onclick="changeQty(${i.id}, 1)">+</button>
+                    <div><b>${i.name}</b><br><span style="color:var(--primary)">R$ ${(i.price*i.qty).toFixed(2).replace('.',',')}</span></div>
+                    <div class="qty-controls">
+                        <i class="fas fa-minus" onclick="changeQty(${i.id}, -1)"></i>
+                        <span>${i.qty}</span>
+                        <i class="fas fa-plus" onclick="changeQty(${i.id}, 1)"></i>
                     </div>
                 </div>
             `).join('');
         }
 
-        function closeCart() {
-            document.getElementById('modal').style.display = 'none';
+        function changeQty(id, delta) {
+            cart[id].qty += delta;
+            if (cart[id].qty <= 0) delete cart[id];
+            updateUI();
+            if (Object.keys(cart).length === 0) closeCart(); else openCart();
         }
+
+        function handleCheckout() {
+            const name = document.getElementById('name').value;
+            const pay = document.getElementById('pay').value;
+            if (!name || !pay) return alert("Preencha seu nome e pagamento!");
+
+            if (pay === "Pix") {
+                const total = Object.values(cart).reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
+                document.getElementById('checkout-form').style.display = 'none';
+                document.getElementById('pix-screen').style.display = 'block';
+                document.getElementById('pix-value').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            } else sendWhatsApp();
+        }
+
+        function copyKey() {
+            navigator.clipboard.writeText(CHAVE_PIX);
+            alert("Chave Pix copiada!");
+        }
+
+        function backToCart() { document.getElementById('checkout-form').style.display = 'block'; document.getElementById('pix-screen').style.display = 'none'; }
+        function closeCart() { document.getElementById('modal').style.display = 'none'; }
 
         function sendWhatsApp() {
-            const name = document.getElementById('name').value.trim();
-            const addr = document.getElementById('addr').value.trim();
+            const name = document.getElementById('name').value;
+            const addr = document.getElementById('addr').value || "Retirada";
             const pay = document.getElementById('pay').value;
-
-            if (!name || !addr || !pay) {
-                alert("Preencha todos os dados para entrega! 😊");
-                return;
-            }
-
-            let msg = `🎀 *PEDIDO - TRÊS MARIAZINHAS* 🎀\n\n`;
-            msg += `👤 *Cliente:* ${name}\n`;
-            msg += `📍 *Endereço:* ${addr}\n`;
-            msg += `💳 *Pagamento:* ${pay}\n`;
-            msg += `\n🛒 *Itens:*\n`;
-
-            Object.values(cart).forEach(i => {
-                msg += `• ${i.qty}x ${i.name} (R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')})\n`;
-            });
-
+            let msg = `🎀 *NOVO PEDIDO - TRÊS MARIAZINHAS* 🎀\n\n👤 *Cliente:* ${name}\n📍 *Entrega:* ${addr}\n💳 *Pagamento:* ${pay}\n\n🛒 *ITENS:*\n`;
+            Object.values(cart).forEach(i => msg += `• ${i.qty}x ${i.name}\n`);
             const total = Object.values(cart).reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
             msg += `\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
-
-            const phone = "5511915183761";
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
+            if (pay === "Pix") msg += `\n\n✅ _Estou enviando o comprovante!_`;
+            window.open(`https://wa.me/${WHATSAPP_FONE}?text=${encodeURIComponent(msg)}`);
         }
 
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('modal')) closeCart();
-        }
-
-        renderProducts();
+        render();
     </script>
-
 </body>
 </html>
