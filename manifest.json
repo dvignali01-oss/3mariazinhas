@@ -1,22 +1,17 @@
 {
-  "name": "Três Mariazinhas",
-  "short_name": "Mariazinhas",
-  "start_url": "./",
+  "name": "Três Mariazinhas Doceria",
+  "short_name": "3 Mariazinhas",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#F5E6EC",
-  "theme_color": "#F09DBA",
+  "background_color": "#FFF9FA",
+  "theme_color": "#FF85A2",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-512x512.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/2682/2682444.png",
+      "type": "image/png",
       "sizes": "512x512",
-      "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "splash.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "any"
     }
   ]
 }
