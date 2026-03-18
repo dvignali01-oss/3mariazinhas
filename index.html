@@ -1,321 +1,346 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Três Mariazinhas | Doceria Artesanal</title>
     
-    <img src="icon.png" alt="Logotipo Três Mariazinhas" width="400"/>
-
-    
-    <link rel="icon" type="image/png" href="icon-512x512.png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#F09DBA">
-   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Paleta baseada no logotipo */
-            --primary: #E96C8E;        /* Rosa forte do laço */
-            --primary-hover: #D45B7D;
-            --secondary: #F09DBA;      /* Rosa médio */
-            --bg-color: #FFF5F7;       /* Fundo rosa bem suave */
-            --card-bg: #FFFFFF;        /* Fundo dos cards */
-            --text-main: #5F3E35;      /* Marrom escuro (contorno do desenho) */
-            --text-light: #9B7E76;     /* Marrom claro para textos secundários */
-            --success: #10B981;        /* Verde para preços e finalizar */
-            --radius-lg: 24px;
-            --radius-md: 16px;
+            --primary: #FF85A2;        /* Rosa Chiclete */
+            --secondary: #6D4C41;      /* Marrom Chocolate */
+            --accent: #FFD1DC;         /* Rosa Bebê */
+            --bg: #FFF9FA;             /* Fundo Off-White Pink */
+            --white: #FFFFFF;
+            --success: #27AE60;
+            --shadow: 0 8px 30px rgba(255, 133, 162, 0.15);
+            --radius: 24px;
         }
 
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Outfit', sans-serif;
         }
 
         body {
             margin: 0;
-            background: var(--bg-color);
-            color: var(--text-main);
-            padding-bottom: 120px; /* Espaço para o carrinho flutuante */
+            background: var(--bg);
+            color: var(--secondary);
+            overflow-x: hidden;
         }
 
-        /* HEADER */
+        /* HEADER ANIMADO */
         header {
-            background: var(--secondary);
-            padding: 20px 20px 25px;
+            background: var(--white);
+            padding: 30px 20px;
             text-align: center;
-            border-bottom-left-radius: var(--radius-lg);
-            border-bottom-right-radius: var(--radius-lg);
-            box-shadow: 0 4px 15px rgba(233, 108, 142, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 10;
         }
 
-        header img {
-            width: 180px; /* Ajuste o tamanho do seu logo aqui */
-            max-width: 100%;
-            height: auto;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        .logo-font {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin: 0;
+            text-shadow: 2px 2px 0px var(--accent);
         }
 
         header p {
             margin: 5px 0 0;
-            color: #FFFFFF;
+            font-weight: 400;
+            opacity: 0.8;
             font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
-        /* PRODUTOS */
+        /* CATEGORIAS */
+        .categories {
+            display: flex;
+            gap: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+
+        .cat-item {
+            background: var(--white);
+            padding: 10px 20px;
+            border-radius: 50px;
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border: 1px solid var(--accent);
+            transition: 0.3s;
+        }
+        .cat-item.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* LISTA DE PRODUTOS */
         .container {
-            padding: 20px 15px;
-            max-width: 600px;
-            margin: auto;
+            padding: 0 20px 120px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dois itens por linha no mobile */
+            gap: 15px;
         }
 
         .card {
-            background: var(--card-bg);
-            padding: 12px;
-            border-radius: var(--radius-md);
-            margin-bottom: 15px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(95, 62, 53, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .card:active {
-            transform: scale(0.98);
-        }
+        .card:active { transform: scale(0.95); }
 
         .card img {
-            width: 90px;
-            height: 90px;
-            border-radius: 12px;
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 18px;
             object-fit: cover;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
         }
 
-        .info { flex: 1; }
-        
-        .info b {
-            font-size: 1.05rem;
+        .card b {
             display: block;
-            margin-bottom: 4px;
-            color: var(--text-main);
+            font-size: 0.95rem;
             line-height: 1.2;
+            height: 2.4em;
+            overflow: hidden;
+            margin-bottom: 5px;
         }
 
-        .price {
-            color: var(--success);
-            font-weight: 600;
+        .price-tag {
+            color: var(--primary);
+            font-weight: 700;
             font-size: 1.1rem;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .btn-add {
             background: var(--primary);
-            border: none;
             color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
+            border: none;
             width: 100%;
-            transition: background 0.2s;
+            padding: 10px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 133, 162, 0.3);
         }
 
-        .btn-add:hover, .btn-add:active { background: var(--primary-hover); }
-
-        /* CARRINHO FLUTUANTE */
+        /* CARRINHO FLUTUANTE (PILL DESIGN) */
         .cart-bar {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translate(-50%, 150%);
-            background: var(--text-main);
+            background: var(--secondary);
+            backdrop-filter: blur(10px);
             color: white;
-            padding: 16px 24px;
+            padding: 15px 25px;
             border-radius: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 90%;
-            max-width: 400px;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(95, 62, 53, 0.3);
-            cursor: pointer;
-            z-index: 200;
-            font-weight: 500;
+            width: 85%;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
         .cart-bar.active { transform: translate(-50%, 0); }
-        .cart-bar i { color: var(--secondary); margin-right: 8px; font-size: 1.2rem; }
 
-        /* MODAL BOTTOM SHEET (ESTILO APP) */
+        .cart-info { display: flex; align-items: center; gap: 10px; }
+        .cart-badge {
+            background: var(--primary);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* MODAL BOTTOM SHEET */
         .modal {
-            display: none;
             position: fixed;
             inset: 0;
-            background: rgba(95, 62, 53, 0.6);
-            z-index: 300;
-            backdrop-filter: blur(4px);
-            animation: fadeIn 0.3s ease;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            z-index: 200;
+            backdrop-filter: blur(5px);
         }
 
         .modal-box {
-            background: var(--bg-color);
-            padding: 25px 20px;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             position: absolute;
             bottom: 0;
             width: 100%;
-            max-height: 85vh;
+            background: var(--bg);
+            border-radius: 35px 35px 0 0;
+            padding: 30px 20px;
+            max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            animation: slideUp 0.3s ease;
+            animation: slideUp 0.4s ease;
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid rgba(233, 108, 142, 0.2);
-            padding-bottom: 10px;
+        .handle {
+            width: 40px;
+            height: 5px;
+            background: #D1D1D1;
+            border-radius: 10px;
+            margin: -10px auto 20px;
         }
 
-        .modal-header h3 { margin: 0; color: var(--text-main); }
-        .close-icon { font-size: 1.5rem; color: var(--text-light); cursor: pointer; }
-
-        /* LISTA DO CARRINHO */
         .item-row {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 20px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--card-bg);
-            padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
-        .item-name { font-weight: 600; font-size: 0.95rem; }
-        .item-price { color: var(--text-light); font-size: 0.85rem; }
-
-        .qty-controls {
+        .qty-box {
             display: flex;
-            gap: 12px;
             align-items: center;
-            background: var(--bg-color);
-            padding: 4px 8px;
-            border-radius: 8px;
+            gap: 15px;
+            background: var(--bg);
+            padding: 5px 12px;
+            border-radius: 12px;
         }
 
         .qty-btn {
-            background: transparent;
             border: none;
+            background: none;
             color: var(--primary);
             font-size: 1.2rem;
             font-weight: bold;
-            padding: 0 5px;
-            cursor: pointer;
         }
 
-        /* FORMULÁRIO DE CHECKOUT */
-        .form-group { margin-top: 20px; }
-        
-        input, select {
-            width: 100%;
-            padding: 14px;
+        /* INPUTS ESTILIZADOS */
+        .form-group input, .form-group select {
+            border: 2px solid transparent;
+            background: var(--white);
+            padding: 16px;
+            border-radius: 18px;
             margin-bottom: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(233, 108, 142, 0.3);
-            background: var(--card-bg);
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-            transition: border 0.2s;
+            width: 100%;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
 
-        input:focus, select:focus { border-color: var(--primary); }
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
 
         .btn-send {
             background: var(--success);
-            width: 100%;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
             color: white;
-            font-weight: 600;
-            font-size: 1.05rem;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
             margin-top: 10px;
-            cursor: pointer;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
         }
 
-        /* Animações */
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        /* Responsividade para telas maiores (opcional) */
+        @media (min-width: 500px) {
+            .container { grid-template-columns: 1fr 1fr 1fr; }
+        }
     </style>
 </head>
-
 <body>
 
     <header>
-        <img src="logo.png" alt="Três Mariazinhas">
-        <p><i class="fas fa-heart"></i> Feito com amor para você</p>
+        <h1 class="logo-font">Três Mariazinhas</h1>
+        <p><i class="fas fa-heart" style="color: var(--primary)"></i> Confeitaria Artesanal</p>
     </header>
+
+    <div class="categories">
+        <div class="cat-item active">Todos</div>
+        <div class="cat-item">Bolos</div>
+        <div class="cat-item">Copos</div>
+        <div class="cat-item">Brigadeiros</div>
+    </div>
 
     <div class="container" id="list"></div>
 
     <div class="cart-bar" id="cart-bar" onclick="openCart()">
-        <span><i class="fas fa-shopping-bag"></i> <span id="cart-count">0</span> itens</span>
+        <div class="cart-info">
+            <div class="cart-badge" id="cart-count">0</div>
+            <span>Ver sacola</span>
+        </div>
         <b id="total-price">R$ 0,00</b>
     </div>
 
     <div class="modal" id="modal">
         <div class="modal-box">
-            <div class="modal-header">
-                <h3>Seu Pedido</h3>
-                <i class="fas fa-times close-icon" onclick="closeCart()"></i>
+            <div class="handle"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0; font-size: 1.4rem;">Sua Sacola 🛍️</h2>
+                <i class="fas fa-times" onclick="closeCart()" style="font-size: 1.2rem; opacity: 0.5;"></i>
             </div>
             
             <div id="items-list"></div>
             
-            <div class="form-group">
-                <input id="name" type="text" placeholder="Seu Nome Completo">
-                <input id="addr" type="text" placeholder="Endereço (Rua, Número, Bairro)">
+            <div class="form-group" style="margin-top: 25px;">
+                <input id="name" type="text" placeholder="Seu nome">
+                <input id="addr" type="text" placeholder="Endereço de entrega">
                 <select id="pay">
-                    <option value="" disabled selected>Forma de Pagamento</option>
-                    <option value="Pix">Pix (Chave na entrega)</option>
-                    <option value="Cartão">Cartão (Levar maquininha)</option>
+                    <option value="" disabled selected>Forma de pagamento</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão">Cartão (Maquininha)</option>
                     <option value="Dinheiro">Dinheiro</option>
                 </select>
             </div>
 
             <button class="btn-send" onclick="sendWhatsApp()">
-                <i class="fab fa-whatsapp"></i> Enviar Pedido
+                Finalizar Pedido <i class="fab fa-whatsapp"></i>
             </button>
         </div>
     </div>
 
     <script>
-        // Usei imagens genéricas de alta qualidade para doces, 
-        // mas você pode substituir pelos links das suas fotos reais.
         const products = [
-            {id: 1, name: "Bolo de Ninho com Morango", price: 18.00, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=300&fit=crop"},
-            {id: 2, name: "Copo da Felicidade", price: 22.00, img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=300&h=300&fit=crop"},
-            {id: 3, name: "Caixinha c/ 6 Brigadeiros", price: 15.00, img: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=300&h=300&fit=crop"}
+            {id: 1, name: "Bolo Ninho c/ Morango", price: 18.00, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400"},
+            {id: 2, name: "Copo da Felicidade", price: 22.00, img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400"},
+            {id: 3, name: "Caixa 6 Brigadeiros", price: 15.00, img: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400"},
+            {id: 4, name: "Fatia Red Velvet", price: 16.50, img: "https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=400"}
         ];
 
         let cart = {};
@@ -325,11 +350,9 @@
             list.innerHTML = products.map(p => `
                 <div class="card">
                     <img src="${p.img}" alt="${p.name}">
-                    <div class="info">
-                        <b>${p.name}</b>
-                        <div class="price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
-                        <button class="btn-add" onclick="addToCart(${p.id})">Adicionar</button>
-                    </div>
+                    <b>${p.name}</b>
+                    <div class="price-tag">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+                    <button class="btn-add" onclick="addToCart(${p.id})">Adicionar</button>
                 </div>
             `).join('');
         }
@@ -342,6 +365,9 @@
                 cart[id] = { ...product, qty: 1 };
             }
             updateCartUI();
+            
+            // Feedback tátil simples
+            navigator.vibrate?.(50);
         }
 
         function changeQty(id, delta) {
@@ -350,7 +376,7 @@
                 if (cart[id].qty <= 0) delete cart[id];
             }
             updateCartUI();
-            openCart(); // Atualiza a lista na tela
+            openCart();
         }
 
         function updateCartUI() {
@@ -384,12 +410,14 @@
             list.innerHTML = items.map(i => `
                 <div class="item-row">
                     <div>
-                        <div class="item-name">${i.name}</div>
-                        <div class="item-price">R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}</div>
+                        <div style="font-weight: 600;">${i.name}</div>
+                        <div style="color: var(--primary); font-size: 0.9rem; font-weight: 700;">
+                            R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}
+                        </div>
                     </div>
-                    <div class="qty-controls">
+                    <div class="qty-box">
                         <button class="qty-btn" onclick="changeQty(${i.id}, -1)">-</button>
-                        <span>${i.qty}</span>
+                        <span style="font-weight: 600;">${i.qty}</span>
                         <button class="qty-btn" onclick="changeQty(${i.id}, 1)">+</button>
                     </div>
                 </div>
@@ -406,34 +434,29 @@
             const pay = document.getElementById('pay').value;
 
             if (!name || !addr || !pay) {
-                alert("Por favor, preencha todos os campos (Nome, Endereço e Pagamento) para finalizar!");
+                alert("Preencha todos os dados para entrega! 😊");
                 return;
             }
 
-            let msg = `🎀 *Novo Pedido - Três Mariazinhas* 🎀\n\n`;
+            let msg = `🎀 *PEDIDO - TRÊS MARIAZINHAS* 🎀\n\n`;
             msg += `👤 *Cliente:* ${name}\n`;
             msg += `📍 *Endereço:* ${addr}\n`;
             msg += `💳 *Pagamento:* ${pay}\n`;
-            msg += `--------------------------\n`;
+            msg += `\n🛒 *Itens:*\n`;
 
             Object.values(cart).forEach(i => {
-                msg += `▶ ${i.qty}x ${i.name} - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
+                msg += `• ${i.qty}x ${i.name} (R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')})\n`;
             });
 
             const total = Object.values(cart).reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
-            msg += `--------------------------\n`;
-            msg += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+            msg += `\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
 
             const phone = "5511915183761";
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
         }
 
-        // Fechar modal ao clicar fora da caixa branca
         window.onclick = function(event) {
-            const modal = document.getElementById('modal');
-            if (event.target == modal) {
-                closeCart();
-            }
+            if (event.target == document.getElementById('modal')) closeCart();
         }
 
         renderProducts();
